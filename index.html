@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculadora de Pago de Jornadas de Trabajo</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #f0f0f0;
+    }
+    .calculator {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
+    .birra-message {
+        margin-top: 10px;
+        font-weight: bold;
+    }
+    .message-label {
+        font-size: 2.0em; /* Tamaño de fuente para los mensajes de horas */
+    }
+</style>
+</head>
+<body>
+<div class="calculator">
+    <h1>Calculadora de Pago de Jornadas de Trabajo</h1>
+    <label for="horasSemana" class="message-label">Horas de semana:</label>
+    <input type="number" id="horasSemana" step="0.01"><br><br>
+    <label for="horasSabado" class="message-label">Horas en sábados:</label>
+    <input type="number" id="horasSabado" step="0.01"><br><br>
+    <label for="horasFeriado" class="message-label">Horas en feriados:</label>
+    <input type="number" id="horasFeriado" step="0.01"><br><br>
+    <button onclick="calcularPago()">Calcular Pago</button><br><br>
+    <p id="resultado"></p>
+    <p class="birra-message" id="birraMessage"></p>
+</div>
+
+<script>
+    function calcularPago() {
+        let horasSemana = document.getElementById('horasSemana').value;
+        let horasSabado = document.getElementById('horasSabado').value;
+        let horasFeriado = document.getElementById('horasFeriado').value;
+
+        // Verificar si los campos están vacíos y reemplazar con 0 si es necesario
+        horasSemana = horasSemana === '' ? 0 : parseFloat(horasSemana);
+        horasSabado = horasSabado === '' ? 0 : parseFloat(horasSabado);
+        horasFeriado = horasFeriado === '' ? 0 : parseFloat(horasFeriado);
+
+        const valorHoraSemana = 0.9;
+        const valorHoraSabado = 1.2;
+        const valorHoraFeriado = 1.7;
+
+        const pagoSemana = horasSemana * valorHoraSemana;
+        const pagoSabado = horasSabado * valorHoraSabado;
+        const pagoFeriado = horasFeriado * valorHoraFeriado;
+
+        const totalPago = pagoSemana + pagoSabado + pagoFeriado;
+
+        document.getElementById('resultado').innerText = `El pago total es: $${totalPago.toFixed(2)}`;
+
+        const birraMessage = document.getElementById('birraMessage');
+        if (totalPago > 60) {
+            birraMessage.innerText = "¡Invítale una birra al programador 🍺!";
+        } else if (totalPago < 48) {
+            birraMessage.innerText = "Estás re pobre, che 😢";
+        } else {
+            birraMessage.innerText = "";
+        }
+    }
+</script>
+</body>
+</html>
